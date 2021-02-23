@@ -7,20 +7,21 @@ import time
 
 PATH="D:\DevClub\Web Scraping Assignment\chromedriver.exe"
 driver = webdriver.Chrome(PATH)
-
+# opening website
 driver.get("https://moodle.iitd.ac.in/login/index.php")
-
+# entering username and password
 uname = driver.find_element_by_id("username")
 username=input("Pls enter your username:")
 uname.send_keys(username)
 pword = driver.find_element_by_id("password")
 password=input("Pls enter your Password:")
 pword.send_keys(password)
-
+# obtaing captcha and its instructions
 text = driver.find_element_by_id("login").text
 
 l=text.splitlines()
 captcha=l[3]
+# perfoming different actions to solve the given captcha
 if(captcha.find("add")!=-1):
     index=captcha.find("add")
     num1=captcha[index+4:index+6]
@@ -52,12 +53,12 @@ else:
     num2=captcha[index+18:index+20]
     ans=int(num2)
 
-
+# entering the answer of the captcha
 field=driver.find_element_by_id("valuepkg3")
 field.clear()
 field.send_keys(ans)
 
-
+# pressing the login button
 login = driver.find_element_by_id("loginbtn")
 login.send_keys(Keys.RETURN)
 
